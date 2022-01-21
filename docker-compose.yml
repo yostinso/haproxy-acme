@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  haproxy:
+    image: yostinso/qnap-haproxy
+    ports:
+      - "443:443"
+    networks:
+      haproxy-bridge:
+        aliases:
+          - haproxy
+    volumes:
+      - "/your/path/to/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+      - "acme_conf:/acme/conf"
+      - "acme_certs:/acme/certs"
+  subsonic:
+    image: yostinso/subsonic
+    networks:
+      haproxy-bridge:
+        aliases:
+          - subsonic
+    volumes:
+      - "subsonic_data:/var/subsonic"
+      - "/your/Music:/media/Music"
+  teleport:
+    image: quay.io/gravitational/teleport:8
+    networks:
+      haproxy-bridge:
+        aliases:
+          - teleport
+    volumes:
+      - "/your/teleport/config:/etc/teleport"
+      - "/your/teleport/data:/var/lib/teleport"
+
+volumes:
+  acme_conf:
+    name: haproxy_acme_conf
+  acme_certs:
+    name: haproxy_acme_certs
+  subsonic_data:
+    name: subsonic_data
+  
+networks:
+  haproxy-bridge:
