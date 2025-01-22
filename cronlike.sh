@@ -42,7 +42,7 @@ if ! grep -qr CA_EMAIL /acme/conf; then
             while true; do sleep 5; done
         done
     else
-        /acme/acme.sh --register-account --email yostinso@gmail.com
+        /acme/acme.sh --register-account --email "$ACME_EMAIL"
     fi
 fi
 
