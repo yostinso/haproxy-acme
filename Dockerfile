@@ -3,7 +3,7 @@ COPY README.md docs-render/* /tmp/
 RUN pandoc /tmp/README.md -o /tmp/README.html && cat /tmp/README.headers /tmp/README.html > /tmp/README.haproxy
 
 
-FROM haproxy:2.5
+FROM haproxy:3.1
 USER root
 RUN apt-get update && apt-get install -y curl socat supervisor
 
